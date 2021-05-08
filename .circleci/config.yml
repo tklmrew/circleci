@@ -1,19 +1,18 @@
-version: 2.1
-orbs:
-aws-ecr: circleci/aws-ecr@6.1.0
-aws-ecs: circleci/aws-ecs@0.0.8
-workflows:
-build_and_push_image:
+version: 2
 jobs:
-- aws-ecr/build-and-push-image:
-region: AWS_REGION
-account-url: AWS_ECR_ACCOUNT_URL
-repo: 'circleci'　# GitHubのリポジトリ名
-tag: "${CIRCLE_SHA1}"
-- aws-ecs/deploy-service-update:
-requires:
-- aws-ecr/build-and-push-image
-family: 'mmtask'　# ECSのタスク定義名
-cluster-name: 'mmCluster'　# ECSクラスター名
-service-name: 'mmsvc'　# ECSのサービス名
-container-image-name-updates: 'mmrepo,tag=${CIRCLE_SHA1}'　# タスク定義で指定しているコンテナ名
+  build:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn test
