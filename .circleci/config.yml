@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-    # circleci/aws-ecr@6.1.0というorbをaws-ecrというaliasをつけて扱う
+    # circleci/aws-ecr@6.1.0というorbをaws-ecrというaliasをつけて扱う。
     aws-ecr: circleci/aws-ecr@6.1.0
     aws-ecs: circleci/aws-ecs@0.0.8
 
