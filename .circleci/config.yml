@@ -22,4 +22,4 @@ workflows:
             family: ‘mmtask’ # ECSのタスク定義名
             cluster-name: ‘mmCluster’ # ECSクラスター名
             service-name: ‘mmsvc’ # ECSのサービス名
-            container-image-name-updates: ‘mmrepo,tag=${CIRCLE_SHA1}' # タスク定義で指定しているコンテナ名
+            container-image-name-updates: ‘container=mmrepo,tag=${CIRCLE_SHA1}' # タスク定義で指定しているコンテナ名
